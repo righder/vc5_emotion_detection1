@@ -3,7 +3,7 @@ import numpy as np
 import os
 import yaml
 
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 with open("params.yaml", "r") as file:
     params = yaml.safe_load(file)
@@ -21,23 +21,23 @@ y_train = train_data['sentiment'].values
 X_test = test_data['content'].values
 y_test = test_data['sentiment'].values
 
-# Apply Bag of Words (CountVectorizer)
-vectorizer = CountVectorizer(max_features=max_features)
+## Apply TF-IDF Vectorizer
+vectorizer = TfidfVectorizer(max_features=max_features)
 
 # Fit the vectorizer on the training data and transform it to feature vectors
-X_train_bow = vectorizer.fit_transform(X_train)
+X_train_tfidf = vectorizer.fit_transform(X_train)
 
 # Transform the test data using the same vectorizer (do not fit again)
-X_test_bow = vectorizer.transform(X_test)
+X_test_tfidf = vectorizer.transform(X_test)
 
-# Convert the feature vectors to DataFrames for easier handling
-train_df = pd.DataFrame(X_train_bow.toarray())
+## Convert the feature vectors to DataFrames for easier handling
+train_df = pd.DataFrame(X_train_tfidf.toarray())
 train_df['label'] = y_train
 
-test_df = pd.DataFrame(X_test_bow.toarray())
-test_df['label'] = y_test   
+test_df = pd.DataFrame(X_test_tfidf.toarray())
+test_df['label'] = y_test
 
 # Save the processed feature data to CSV files
 os.makedirs("data/interim", exist_ok=True)  # Ensure the directory exists
-train_df.to_csv("data/interim/train_bow.csv", index=False)
-test_df.to_csv("data/interim/test_bow.csv", index=False)
+train_df.to_csv("data/interim/train_tfidf.csv", index=False)
+test_df.to_csv("data/interim/test_tfidf.csv", index=False)

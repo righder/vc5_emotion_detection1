@@ -72,7 +72,7 @@ def main() -> None:
         params = load_params("params.yaml")
         n_estimators = params["model_building"]["n_estimators"]
         max_depth = params["model_building"]["max_depth"]
-        train_data = load_data("data/interim/train_bow.csv")
+        train_data = load_data("data/interim/train_tfidf.csv")
         x_train, y_train = prepare_features(train_data)
         model = train_model(x_train, y_train, n_estimators, max_depth)
         save_model(model, "models/random_forest_model.pkl")

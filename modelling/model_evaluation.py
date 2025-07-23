@@ -64,7 +64,7 @@ def save_metrics(metrics: Dict[str, float], path: str) -> None:
 def main() -> None:
     try:
         model = load_model("models/random_forest_model.pkl")
-        _, X_test, y_test = load_test_data("data/interim/test_bow.csv")
+        _, X_test, y_test = load_test_data("data/interim/test_tfidf.csv")
         metrics_dict = evaluate_model(model, X_test, y_test)
         save_metrics(metrics_dict, "reports/metrics.json")
         logging.info("Model evaluation completed successfully.")
